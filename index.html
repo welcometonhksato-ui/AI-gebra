@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MatrixLab &bull; 3×3 Linear Algebra &amp; System Solver</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <div class="workbench">
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="navbar-brand">
+        <div class="brand-symbol" aria-hidden="true" title="MatrixLab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="8 5 19 12 8 19 8 5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">MatrixLab</span>
+          <span class="brand-badge">3×3 Solver</span>
+        </div>
+      </div>
+
+      <div class="navbar-actions">
+        <!-- Display Format Selector -->
+        <div class="format-toggle">
+          <label for="formatSelect" class="sr-only">Display Format</label>
+          <div class="select-wrapper">
+            <svg class="select-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="9" x2="20" y2="9"/>
+              <line x1="4" y1="15" x2="20" y2="15"/>
+              <line x1="10" y1="3" x2="8" y2="21"/>
+              <line x1="16" y1="3" x2="14" y2="21"/>
+            </svg>
+            <select id="formatSelect" class="form-select" title="Toggle output format">
+              <option value="fraction" selected>Exact Fractions (e.g. 7/3)</option>
+              <option value="decimal4">Decimals (4 places)</option>
+              <option value="decimal2">Decimals (2 places)</option>
+              <option value="decimal6">Decimals (6 places)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="v-divider"></div>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="btn-icon" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Print Action -->
+        <button id="printBtn" class="btn-ghost" title="Print or save as PDF">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Print</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="main-content">
+      <!-- Input Section / Equation Studio -->
+      <section class="panel editor-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h1 class="panel-title">Linear System &bull; <span class="math-expr">A &middot; x = b</span></h1>
+            <p class="panel-subtitle">Enter integer, fraction (<span class="code-tag">3/4</span>), or decimal values. Updates reactively in real time.</p>
+          </div>
+          <div class="panel-meta">
+            <label class="toggle-checkbox" title="Automatically solve on input">
+              <input type="checkbox" id="autoCalcCheckbox" checked>
+              <span class="toggle-track"></span>
+              <span class="toggle-text">Live Solve</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Equation Form Preview -->
+        <div class="equation-strip" aria-label="Equation preview">
+          <div class="eq-token" id="previewEq0">a₁₁x + a₁₂y + a₁₃z = b₁</div>
+          <div class="eq-divider">&bull;</div>
+          <div class="eq-token" id="previewEq1">a₂₁x + a₂₂y + a₂₃z = b₂</div>
+          <div class="eq-divider">&bull;</div>
+          <div class="eq-token" id="previewEq2">a₃₁x + a₃₂y + a₃₃z = b₃</div>
+        </div>
+
+        <!-- Matrix & Vector Input Grid -->
+        <div class="editor-stage">
+          <!-- Coefficient Matrix A -->
+          <div class="matrix-block">
+            <div class="matrix-tag">Matrix A <span class="dim-tag">3×3</span></div>
+            <div class="math-bracket-container">
+              <div class="matrix-cells-3x3" id="matrixAGrid" role="grid" aria-label="Matrix A 3 by 3">
+                <input type="text" id="a00" class="num-input" value="2" data-r="0" data-c="0" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 1 Col 1">
+                <input type="text" id="a01" class="num-input" value="1" data-r="0" data-c="1" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 1 Col 2">
+                <input type="text" id="a02" class="num-input" value="-1" data-r="0" data-c="2" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 1 Col 3">
+
+                <input type="text" id="a10" class="num-input" value="-3" data-r="1" data-c="0" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 2 Col 1">
+                <input type="text" id="a11" class="num-input" value="-1" data-r="1" data-c="1" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 2 Col 2">
+                <input type="text" id="a12" class="num-input" value="2" data-r="1" data-c="2" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 2 Col 3">
+
+                <input type="text" id="a20" class="num-input" value="-2" data-r="2" data-c="0" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 3 Col 1">
+                <input type="text" id="a21" class="num-input" value="1" data-r="2" data-c="1" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 3 Col 2">
+                <input type="text" id="a22" class="num-input" value="2" data-r="2" data-c="2" placeholder="0" spellcheck="false" autocomplete="off" aria-label="A Row 3 Col 3">
+              </div>
+            </div>
+          </div>
+
+          <!-- Multiply Sign -->
+          <div class="math-operator" aria-hidden="true">&times;</div>
+
+          <!-- Variable Vector x -->
+          <div class="matrix-block var-block">
+            <div class="matrix-tag">Vector x <span class="dim-tag">3×1</span></div>
+            <div class="math-bracket-container">
+              <div class="matrix-cells-3x1 var-grid">
+                <div class="var-item">x</div>
+                <div class="var-item">y</div>
+                <div class="var-item">z</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Equals Sign -->
+          <div class="math-operator" aria-hidden="true">=</div>
+
+          <!-- Constant Vector b -->
+          <div class="matrix-block">
+            <div class="matrix-tag">Vector b <span class="dim-tag">3×1</span></div>
+            <div class="math-bracket-container">
+              <div class="matrix-cells-3x1" id="vectorBGrid" role="grid" aria-label="Vector B 3 by 1">
+                <input type="text" id="b0" class="num-input vec-input" value="8" data-r="0" placeholder="0" spellcheck="false" autocomplete="off" aria-label="B Row 1">
+                <input type="text" id="b1" class="num-input vec-input" value="-11" data-r="1" placeholder="0" spellcheck="false" autocomplete="off" aria-label="B Row 2">
+                <input type="text" id="b2" class="num-input vec-input" value="-3" data-r="2" placeholder="0" spellcheck="false" autocomplete="off" aria-label="B Row 3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets & Toolbar -->
+        <div class="editor-toolbar">
+          <div class="preset-group">
+            <span class="preset-label">Presets:</span>
+            <div class="preset-pills">
+              <button type="button" class="btn-preset" data-preset="integers" title="Standard unique integer solution">Integers</button>
+              <button type="button" class="btn-preset" data-preset="fractional" title="Fractional system">Fractions</button>
+              <button type="button" class="btn-preset" data-preset="identity" title="Identity matrix I3">Identity</button>
+              <button type="button" class="btn-preset" data-preset="singular" title="Singular matrix where det=0">Singular</button>
+              <button type="button" class="btn-preset" data-preset="random" title="Generate random integers">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                <span>Random</span>
+              </button>
+              <button type="button" class="btn-preset btn-preset-clear" data-preset="clear" title="Clear all matrix cells to zero">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>Clear</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="primary-actions">
+            <button type="button" id="solveBtn" class="btn-solve" title="Solve system">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 19 12 6 20 6 4"/></svg>
+              <span>Solve</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline Error Banner -->
+        <div id="inputErrorBanner" class="inline-error" style="display: none;" role="alert"></div>
+      </section>
+
+      <!-- Precision Diagnostic Status Strip -->
+      <section class="status-strip" aria-label="System Quick Diagnostics">
+        <!-- Determinant Quick Status -->
+        <div class="status-metric" id="statusDetMetric">
+          <div class="metric-lead">
+            <span class="metric-title">Determinant</span>
+            <span class="metric-badge badge-neutral" id="summaryDetStatus">Non-Singular</span>
+          </div>
+          <div class="metric-value" id="summaryDetVal">&minus;1</div>
+          <div class="metric-sub">&det;(A) via Laplace Expansion</div>
+        </div>
+
+        <!-- Cramer's Rule Quick Status -->
+        <div class="status-metric" id="statusCramerMetric">
+          <div class="metric-lead">
+            <span class="metric-title">Cramer's Solution</span>
+            <span class="metric-badge badge-success" id="summaryCramerStatus">Unique</span>
+          </div>
+          <div class="metric-value font-compact" id="summaryCramerVal">x = 2, y = 3, z = -1</div>
+          <div class="metric-sub">x = D<sub>x</sub>/D, y = D<sub>y</sub>/D, z = D<sub>z</sub>/D</div>
+        </div>
+
+        <!-- Matrix Inverse Quick Status -->
+        <div class="status-metric" id="statusInvMetric">
+          <div class="metric-lead">
+            <span class="metric-title">Matrix Inverse</span>
+            <span class="metric-badge badge-success" id="summaryInvStatus">Invertible</span>
+          </div>
+          <div class="metric-value font-compact" id="summaryInvVal">A⁻¹ Exists</div>
+          <div class="metric-sub">A⁻¹ = &frac1D; &middot; adj(A)</div>
+        </div>
+      </section>
+
+      <!-- Calculation Studio & Tabs -->
+      <section class="panel calculation-studio">
+        <!-- Studio Tab Header -->
+        <div class="studio-header">
+          <nav class="nav-tabs" role="tablist" aria-label="Calculation views">
+            <button class="tab-item active" role="tab" aria-selected="true" data-tab="tab-determinant" id="tabBtnDet">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16"/><path d="M12 4L4 20"/><path d="M12 4l8 16"/></svg>
+              <span>1. Determinant</span>
+            </button>
+            <button class="tab-item" role="tab" aria-selected="false" data-tab="tab-cramer" id="tabBtnCramer">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <span>2. Cramer's Rule</span>
+            </button>
+            <button class="tab-item" role="tab" aria-selected="false" data-tab="tab-inverse" id="tabBtnInv">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>3. Matrix Inverse</span>
+            </button>
+            <button class="tab-item" role="tab" aria-selected="false" data-tab="tab-latex" id="tabBtnLatex">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>4. LaTeX &amp; Export</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Studio Body / Panes -->
+        <div class="studio-body">
+          <!-- Pane 1: Determinant -->
+          <div class="tab-pane active" id="tab-determinant" role="tabpanel" aria-labelledby="tabBtnDet">
+            <div id="detStepContainer" class="step-flow">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- Pane 2: Cramer's Rule -->
+          <div class="tab-pane" id="tab-cramer" role="tabpanel" aria-labelledby="tabBtnCramer">
+            <div id="cramerStepContainer" class="step-flow">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- Pane 3: Matrix Inverse -->
+          <div class="tab-pane" id="tab-inverse" role="tabpanel" aria-labelledby="tabBtnInv">
+            <div id="inverseStepContainer" class="step-flow">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- Pane 4: LaTeX & Export -->
+          <div class="tab-pane" id="tab-latex" role="tabpanel" aria-labelledby="tabBtnLatex">
+            <div class="export-workspace">
+              <div class="export-card">
+                <div class="export-card-header">
+                  <div class="export-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>LaTeX Source Equations</span>
+                  </div>
+                  <button class="btn-copy" id="copyLatexBtn" title="Copy LaTeX code to clipboard">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>Copy LaTeX</span>
+                  </button>
+                </div>
+                <textarea id="latexOutput" class="code-area" readonly rows="12" spellcheck="false"></textarea>
+              </div>
+
+              <div class="export-card">
+                <div class="export-card-header">
+                  <div class="export-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Plain Text Summary</span>
+                  </div>
+                  <button class="btn-copy" id="copyTextBtn" title="Copy plain text summary">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>Copy Text</span>
+                  </button>
+                </div>
+                <textarea id="plainTextOutput" class="code-area" readonly rows="8" spellcheck="false"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="workbench-footer">
+      <div class="footer-meta">
+        <span>MatrixLab &bull; Determinant &bull; Cramer's Rule &bull; Matrix Inverse</span>
+        <span class="footer-dot">&bull;</span>
+        <span>Exact BigInt Rational Arithmetic</span>
+      </div>
+      <div class="footer-keyboard">
+        <span>Keyboard:</span>
+        <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> navigate cells
+        <kbd>Enter</kbd> solve
+        <kbd>Tab</kbd> cycle
+      </div>
+    </footer>
+  </div>
+
+  <!-- Accessible Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- App Logic -->
+  <script src="script.js"></script>
+</body>
+</html>

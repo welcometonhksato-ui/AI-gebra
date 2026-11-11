@@ -1,0 +1,1364 @@
+/* ==========================================================================
+   MatrixLab &bull; YouTube Dark Mode Theme
+   Recreated accurately using YouTube's official Dark Theme design specifications.
+   Tokens: #0F0F0F canvas, #212121 surface, #272727 raised, #3F3F3F / rgba(255,255,255,0.1) chips,
+   #FF0000 brand red buttons, #3EA6FF active link/focus blue, #F1F1F1 primary text, #AAAAAA secondary text.
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  --radius-pill: 9999px;
+  --radius-chip: 8px;
+  --radius-card: 12px;
+  --radius-sm: 6px;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms;
+}
+
+/* ==========================================================================
+   YouTube Dark Theme (Default)
+   ========================================================================== */
+
+body.theme-dark {
+  /* YouTube Base Surfaces */
+  --yt-bg: #0F0F0F;                 /* True YouTube dark mode canvas */
+  --yt-surface: #212121;            /* Cards, dialogs, drawers */
+  --yt-surface-hover: #272727;      /* Hover states */
+  --yt-surface-elevated: #282828;   /* Raised components */
+  --yt-surface-sunken: #181818;     /* Sunken headers & preview strips */
+
+  /* YouTube Chip & Button Fills */
+  --yt-chip-bg: rgba(255, 255, 255, 0.1);
+  --yt-chip-hover: rgba(255, 255, 255, 0.2);
+  --yt-chip-active-bg: #F1F1F1;
+  --yt-chip-active-text: #0F0F0F;
+
+  /* YouTube Input Field */
+  --yt-input-bg: #121212;
+  --yt-input-hover: #181818;
+  --yt-input-focus: #141414;
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-normal: #303030;
+  --border-strong: #444444;
+  --border-focus: #3EA6FF;
+
+  /* YouTube Typography */
+  --text-primary: #F1F1F1;
+  --text-secondary: #AAAAAA;
+  --text-muted: #717171;
+
+  /* YouTube Brand Red & Blue Accents */
+  --yt-red: #FF0000;
+  --yt-red-hover: #CC0000;
+  --yt-red-active: #990000;
+  --yt-red-subtle: rgba(255, 0, 0, 0.14);
+
+  --yt-blue: #3EA6FF;
+  --yt-blue-hover: #65B8FF;
+  --yt-blue-subtle: rgba(62, 166, 255, 0.14);
+
+  /* Semantic Feedback (YouTube style) */
+  --color-success: #2BA640;
+  --color-success-bg: rgba(43, 166, 64, 0.15);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.15);
+  --color-danger: #FF4E45;
+  --color-danger-bg: rgba(255, 78, 69, 0.15);
+
+  --highlight-col: rgba(255, 0, 0, 0.12);
+  --highlight-border: #FF0000;
+
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   YouTube Light Theme (Optional Toggle)
+   ========================================================================== */
+
+body.theme-light {
+  --yt-bg: #FFFFFF;
+  --yt-surface: #F9F9F9;
+  --yt-surface-hover: #F2F2F2;
+  --yt-surface-elevated: #FFFFFF;
+  --yt-surface-sunken: #F1F1F1;
+
+  --yt-chip-bg: rgba(0, 0, 0, 0.05);
+  --yt-chip-hover: rgba(0, 0, 0, 0.1);
+  --yt-chip-active-bg: #0F0F0F;
+  --yt-chip-active-text: #FFFFFF;
+
+  --yt-input-bg: #FFFFFF;
+  --yt-input-hover: #F8F8F8;
+  --yt-input-focus: #FFFFFF;
+
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-normal: #CCCCCC;
+  --border-strong: #909090;
+  --border-focus: #065FD4;
+
+  --text-primary: #0F0F0F;
+  --text-secondary: #606060;
+  --text-muted: #909090;
+
+  --yt-red: #CC0000;
+  --yt-red-hover: #990000;
+  --yt-red-active: #800000;
+  --yt-red-subtle: rgba(204, 0, 0, 0.1);
+
+  --yt-blue: #065FD4;
+  --yt-blue-hover: #0556BF;
+  --yt-blue-subtle: rgba(6, 95, 212, 0.1);
+
+  --color-success: #107C41;
+  --color-success-bg: rgba(16, 124, 65, 0.1);
+  --color-warning: #B45309;
+  --color-warning-bg: rgba(180, 83, 9, 0.1);
+  --color-danger: #CC0000;
+  --color-danger-bg: rgba(204, 0, 0, 0.1);
+
+  --highlight-col: rgba(204, 0, 0, 0.08);
+  --highlight-border: #CC0000;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   Base Reset
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--yt-bg);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* App Workbench Container */
+.workbench {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 3rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ==========================================================================
+   Top Navigation Bar (YouTube Header Style)
+   ========================================================================== */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0 1rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* YouTube Red Brand Badge */
+.brand-symbol {
+  width: 36px;
+  height: 36px;
+  background-color: var(--yt-red);
+  color: #FFFFFF;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.35);
+  transition: transform var(--duration-fast) ease;
+}
+
+.brand-symbol:hover {
+  transform: scale(1.05);
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.brand-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.45rem;
+  background-color: var(--yt-red-subtle);
+  color: var(--yt-red);
+  border-radius: var(--radius-sm);
+  margin-left: 0.35rem;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+/* YouTube Search / Dropdown Input Style */
+.form-select {
+  appearance: none;
+  background-color: var(--yt-surface);
+  border: 1px solid var(--border-normal);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
+  padding: 0.42rem 1.85rem 0.42rem 2.1rem;
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.form-select:hover {
+  background-color: var(--yt-surface-hover);
+  border-color: var(--border-strong);
+}
+
+.form-select:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 0.75rem;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid var(--text-secondary);
+  border-bottom: 1.5px solid var(--text-secondary);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.v-divider {
+  width: 1px;
+  height: 20px;
+  background-color: var(--border-subtle);
+}
+
+/* YouTube Circular Icon Button */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--yt-chip-bg);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.btn-icon:hover {
+  background-color: var(--yt-chip-hover);
+  transform: scale(1.04);
+}
+
+.btn-icon:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+}
+
+body.theme-dark .icon-sun { display: block; }
+body.theme-dark .icon-moon { display: none; }
+body.theme-light .icon-sun { display: none; }
+body.theme-light .icon-moon { display: block; }
+
+/* YouTube Ghost Pill Button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: var(--yt-chip-bg);
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease;
+}
+
+.btn-ghost:hover {
+  background-color: var(--yt-chip-hover);
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+}
+
+/* ==========================================================================
+   Main Panels (YouTube Card Surface)
+   ========================================================================== */
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.panel {
+  background-color: var(--yt-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background-color: var(--yt-surface);
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.math-expr {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--yt-red);
+}
+
+.panel-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.code-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background-color: var(--yt-chip-bg);
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+}
+
+/* YouTube Style Toggle Switch */
+.toggle-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggle-track {
+  width: 32px;
+  height: 18px;
+  background-color: var(--border-normal);
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: background-color var(--duration-fast) ease;
+}
+
+.toggle-track::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  transition: transform var(--duration-fast) ease;
+}
+
+.toggle-checkbox input:checked + .toggle-track {
+  background-color: var(--yt-red);
+}
+
+.toggle-checkbox input:checked + .toggle-track::before {
+  transform: translateX(14px);
+}
+
+.toggle-checkbox input:focus-visible + .toggle-track {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 2px;
+}
+
+.toggle-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Equation Preview Strip */
+.equation-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.25rem;
+  background-color: var(--yt-surface-sunken);
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  gap: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.eq-divider {
+  color: var(--border-normal);
+}
+
+/* ==========================================================================
+   Matrix & Vector Editor Stage
+   ========================================================================== */
+
+.editor-stage {
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  overflow-x: auto;
+}
+
+.matrix-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.matrix-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dim-tag {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Mathematical Bracket Framing */
+.math-bracket-container {
+  position: relative;
+  display: inline-flex;
+  padding: 4px 8px;
+}
+
+.math-bracket-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  border: 1.5px solid var(--text-secondary);
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.math-bracket-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 6px;
+  border: 1.5px solid var(--text-secondary);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Matrix Grids */
+.matrix-cells-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 68px);
+  grid-template-rows: repeat(3, 42px);
+  gap: 6px;
+}
+
+.matrix-cells-3x1 {
+  display: grid;
+  grid-template-columns: 68px;
+  grid-template-rows: repeat(3, 42px);
+  gap: 6px;
+}
+
+.math-operator {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  user-select: none;
+  padding-top: 1.2rem;
+}
+
+/* YouTube Input Fields */
+.num-input {
+  width: 100%;
+  height: 100%;
+  background-color: var(--yt-input-bg);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  transition: all var(--duration-fast) ease;
+  padding: 0 4px;
+}
+
+.num-input:hover {
+  background-color: var(--yt-input-hover);
+  border-color: var(--border-strong);
+}
+
+.num-input:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+  background-color: var(--yt-input-focus);
+  border-color: var(--yt-blue);
+  z-index: 2;
+}
+
+.num-input.cell-invalid {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+}
+
+.vec-input {
+  border-color: rgba(255, 0, 0, 0.3);
+}
+
+.var-grid .var-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--text-secondary);
+  background-color: var(--yt-surface-sunken);
+  border: 1px dashed var(--border-normal);
+  border-radius: var(--radius-sm);
+  user-select: none;
+}
+
+/* ==========================================================================
+   YouTube Chip Toolbar & Buttons
+   ========================================================================== */
+
+.editor-toolbar {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--yt-surface-sunken);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.preset-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preset-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* YouTube Filter Chip Button Style */
+.btn-preset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background-color: var(--yt-chip-bg);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.btn-preset:hover {
+  background-color: var(--yt-chip-hover);
+  color: #FFFFFF;
+}
+
+.btn-preset:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+}
+
+.btn-preset-clear {
+  background-color: rgba(255, 78, 69, 0.12);
+  color: var(--color-danger);
+}
+
+.btn-preset-clear:hover {
+  background-color: rgba(255, 78, 69, 0.22);
+  color: #FFFFFF;
+}
+
+/* YouTube Red Primary Action Button ("Solve") */
+.btn-solve {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--yt-red);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.35);
+}
+
+.btn-solve:hover {
+  background-color: var(--yt-red-hover);
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-solve:active {
+  background-color: var(--yt-red-active);
+  transform: translateY(0);
+}
+
+.btn-solve:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 2px;
+}
+
+.inline-error {
+  padding: 0.65rem 1.25rem;
+  background-color: var(--color-danger-bg);
+  border-top: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   YouTube Dark Mode Diagnostics Status Strip
+   ========================================================================== */
+
+.status-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.status-metric {
+  background-color: var(--yt-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+
+.status-metric:hover {
+  background-color: var(--yt-surface-hover);
+  border-color: var(--border-normal);
+}
+
+.metric-lead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* YouTube Rounded Pill Badges */
+.metric-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+}
+
+.badge-neutral {
+  background-color: var(--yt-chip-bg);
+  color: var(--text-secondary);
+}
+
+.badge-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.badge-warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.badge-danger {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metric-value.font-compact {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.metric-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   YouTube Channel Style Tabs & Studio
+   ========================================================================== */
+
+.calculation-studio {
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-header {
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--yt-surface);
+  padding: 0.25rem 0.75rem 0 0.75rem;
+  overflow-x: auto;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  min-width: max-content;
+}
+
+/* YouTube Channel Tab Style (Clean Underline & Pill) */
+.tab-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.tab-item:hover {
+  color: var(--text-primary);
+}
+
+.tab-item.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--yt-red); /* YouTube Red Tab Underline */
+}
+
+.tab-item:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: -2px;
+}
+
+.studio-body {
+  padding: 1.5rem 1.25rem;
+  background-color: var(--yt-surface);
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+  animation: fadeIn 150ms var(--ease-standard);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Step Flow & Mathematical Math Display
+   ========================================================================== */
+
+.step-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.flow-step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--yt-red-subtle);
+  color: var(--yt-red);
+}
+
+.flow-step-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.flow-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* YouTube Style Raised Mathematical Display Card */
+.math-display-card {
+  background-color: var(--yt-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 0.9rem 1.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 2px;
+  font-size: 0.95em;
+  line-height: 1.1;
+}
+
+.frac .num {
+  border-bottom: 1.2px solid currentColor;
+  padding-bottom: 1px;
+}
+
+.frac .den {
+  padding-top: 1px;
+}
+
+.sign-neg {
+  margin-right: 2px;
+}
+
+/* Rendered Matrices */
+.render-matrix {
+  position: relative;
+  display: inline-flex;
+  padding: 4px 8px;
+  margin: 0 4px;
+  vertical-align: middle;
+}
+
+.render-matrix.bracket::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  border: 1.5px solid currentColor;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.render-matrix.bracket::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 5px;
+  border: 1.5px solid currentColor;
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.render-matrix.det-bars::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1.5px;
+  background-color: currentColor;
+}
+
+.render-matrix.det-bars::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1.5px;
+  background-color: currentColor;
+}
+
+.matrix-table {
+  border-collapse: separate;
+  border-spacing: 6px 4px;
+}
+
+.matrix-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px 6px;
+  min-width: 26px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.matrix-table td.col-replaced {
+  background-color: var(--highlight-col);
+  border: 1px dashed var(--highlight-border);
+  color: var(--yt-red);
+  font-weight: 600;
+}
+
+/* Minors Cards Grid */
+.minors-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.minor-item-card {
+  background-color: var(--yt-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.minor-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.sign-indicator {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-pill);
+}
+
+.sign-pos {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.sign-neg-ind {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+/* Verification Card */
+.verification-card {
+  background-color: var(--color-success-bg);
+  border: 1px solid rgba(43, 166, 64, 0.3);
+  border-radius: var(--radius-card);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.verification-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-success);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.verification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+/* Callout Alerts */
+.callout-alert {
+  border-radius: var(--radius-card);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.callout-danger {
+  background-color: var(--color-danger-bg);
+  border: 1px solid rgba(255, 78, 69, 0.3);
+  color: var(--color-danger);
+}
+
+.callout-warning {
+  background-color: var(--color-warning-bg);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--color-warning);
+}
+
+.callout-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-bottom: 0.25rem;
+}
+
+.callout-desc {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Export Workspace */
+.export-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.export-card {
+  background-color: var(--yt-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.export-card-header {
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.export-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  background-color: var(--yt-chip-bg);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.btn-copy:hover {
+  background-color: var(--yt-chip-hover);
+  color: #FFFFFF;
+}
+
+.btn-copy:focus-visible {
+  outline: 2px solid var(--yt-blue);
+  outline-offset: 1px;
+}
+
+.code-area {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.9rem 1rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.code-area:focus-visible {
+  outline: none;
+  background-color: var(--yt-input-focus);
+}
+
+/* Footer */
+.workbench-footer {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-dot {
+  color: var(--border-normal);
+}
+
+.footer-keyboard {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+kbd {
+  background-color: var(--yt-surface);
+  border: 1px solid var(--border-normal);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--yt-surface-elevated);
+  border: 1px solid var(--border-normal);
+  color: var(--text-primary);
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  font-size: 0.82rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--duration-fast) ease, transform var(--duration-fast) ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive & Print */
+@media (max-width: 768px) {
+  .editor-stage {
+    gap: 0.75rem;
+  }
+
+  .matrix-cells-3x3 {
+    grid-template-columns: repeat(3, 56px);
+    grid-template-rows: repeat(3, 38px);
+    gap: 4px;
+  }
+
+  .matrix-cells-3x1 {
+    grid-template-columns: 56px;
+    grid-template-rows: repeat(3, 38px);
+    gap: 4px;
+  }
+
+  .num-input {
+    font-size: 0.88rem;
+  }
+
+  .workbench-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .navbar-actions,
+  .editor-toolbar,
+  .studio-header,
+  .btn-copy,
+  .workbench-footer {
+    display: none !important;
+  }
+
+  .panel {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .tab-pane {
+    display: block !important;
+  }
+
+  .num-input {
+    border: 1px solid #333 !important;
+    background: transparent !important;
+    color: #000 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
